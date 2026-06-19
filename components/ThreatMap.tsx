@@ -7,7 +7,6 @@ import { OrbitControls } from '@react-three/drei';
 import Globe from './Globe';
 import Starfield from './Starfield';
 import AttackBeam from './AttackBeam';
-import Counters from './Counters';
 import EventFeed from './EventFeed';
 import { useAttackStream } from '@/lib/useAttackStream';
 import type { AttackEvent } from '@/lib/types';
@@ -18,9 +17,6 @@ const MAX_BEAMS = 40;
 export default function ThreatMap() {
   const [beams, setBeams] = useState<AttackEvent[]>([]);
   const [feed, setFeed] = useState<AttackEvent[]>([]);
-  const [total, setTotal] = useState(0);
-  const [sources, setSources] = useState<Set<string>>(new Set());
-  const [targets, setTargets] = useState<Set<string>>(new Set());
 
   const latest = useAttackStream(false);
 
@@ -29,17 +25,6 @@ export default function ThreatMap() {
 
     setBeams((prev) => [...prev.slice(-(MAX_BEAMS - 1)), latest]);
     setFeed((prev) => [latest, ...prev].slice(0, MAX_FEED));
-    setTotal((t) => t + 1);
-    setSources((prev) => {
-      const next = new Set(prev);
-      next.add(latest.sourceCode);
-      return next;
-    });
-    setTargets((prev) => {
-      const next = new Set(prev);
-      next.add(latest.targetCode);
-      return next;
-    });
   }, [latest]);
 
   const removeBeam = useCallback((id: string) => {
@@ -82,11 +67,6 @@ export default function ThreatMap() {
 
       <div className="pointer-events-none absolute inset-0">
         <EventFeed events={feed} />
-        <Counters
-          totalEvents={total}
-          sourceCountries={sources.size}
-          targetCountries={targets.size}
-        />
       </div>
     </div>
   );
