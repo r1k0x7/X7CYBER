@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { latLngToVector3, buildArc } from '@/lib/geo';
 import { GLOBE_RADIUS } from './Globe';
@@ -111,6 +112,20 @@ export default function AttackBeam({ event, paused, onDone }: Props) {
           depthWrite={false}
         />
       </mesh>
+
+      {/* source country label */}
+      <Html position={source} center distanceFactor={6} zIndexRange={[10, 0]}>
+        <div className="whitespace-nowrap rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium leading-none text-[#ff7a86] backdrop-blur-sm">
+          {event.sourceCountry}
+        </div>
+      </Html>
+
+      {/* target country label */}
+      <Html position={target} center distanceFactor={6} zIndexRange={[10, 0]}>
+        <div className="whitespace-nowrap rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium leading-none text-[#8fc7ff] backdrop-blur-sm">
+          {event.targetCountry}
+        </div>
+      </Html>
 
       {/* source node + halo */}
       <mesh ref={sourceRef} position={source}>
