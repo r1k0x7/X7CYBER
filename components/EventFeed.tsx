@@ -16,11 +16,12 @@ function typeColor(t: string): string {
 }
 
 export default function EventFeed({ events }: { events: AttackEvent[] }) {
-  // Collapsed by default on small screens so the map stays visible.
-  const [open, setOpen] = useState(false);
+  // Expanded by default so the attack log is visible; users can collapse it
+  // on mobile if it overlaps the map.
+  const [open, setOpen] = useState(true);
 
   return (
-    <div className="pointer-events-auto absolute bottom-3 left-3 z-10 flex max-h-[45vh] w-[calc(100vw-1.5rem)] flex-col overflow-hidden rounded-xl border border-threat-border bg-threat-panel shadow-2xl shadow-black/40 backdrop-blur-md sm:bottom-4 sm:left-4 sm:max-h-[60vh] sm:w-[27rem]">
+    <div className="pointer-events-auto absolute bottom-3 left-3 z-10 flex max-h-[38vh] w-[calc(100vw-1.5rem)] flex-col overflow-hidden rounded-xl border border-threat-border bg-threat-panel shadow-2xl shadow-black/40 backdrop-blur-md sm:bottom-4 sm:left-4 sm:max-h-[60vh] sm:w-[27rem]">
       {/* header (acts as toggle on mobile) */}
       <button
         type="button"
