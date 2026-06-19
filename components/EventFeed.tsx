@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { AttackEvent } from '@/lib/types';
 
 const TYPE_COLOR: Record<string, string> = {
@@ -19,6 +19,18 @@ export default function EventFeed({ events }: { events: AttackEvent[] }) {
   // Expanded by default so the attack log is visible; users can collapse it
   // on mobile if it overlaps the map.
   const [open, setOpen] = useState(true);
+
+  // Show fewer rows on mobile (5) than on desktop (10).
+  const [isDesktop, setIsDesktop] = useState(true);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 640px)');
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  const visible = events.slice(0, isDesktop ? 10 : 5);
 
   return (
     <div className="pointer-events-auto absolute bottom-3 left-3 z-10 flex max-h-[38vh] w-[calc(100vw-1.5rem)] flex-col overflow-hidden rounded-xl border border-threat-border bg-threat-panel shadow-2xl shadow-black/40 backdrop-blur-md sm:bottom-4 sm:left-4 sm:max-h-[60vh] sm:w-[27rem]">
@@ -65,12 +77,12 @@ export default function EventFeed({ events }: { events: AttackEvent[] }) {
 
         {/* rows */}
         <div className="panel-scroll min-h-0 flex-1 overflow-y-auto">
-          {events.length === 0 && (
+          {visible.length === 0 && (
             <div className="py-8 text-center text-[11px] text-threat-dim">
               Waiting for attacks…
             </div>
           )}
-          {events.map((e, i) => {
+          {visible.map((e, i) => {
             const color = typeColor(e.attackType);
             return (
               <div
