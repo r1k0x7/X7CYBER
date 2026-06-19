@@ -11,7 +11,7 @@ import LeftPanel from './LeftPanel';
 import Counters from './Counters';
 import EventFeed from './EventFeed';
 import { useAttackStream } from '@/lib/useAttackStream';
-import type { AttackEvent, AttackType, Interval } from '@/lib/types';
+import type { AttackEvent, AttackType } from '@/lib/types';
 import { ATTACK_TYPES } from '@/lib/types';
 
 const MAX_FEED = 18;
@@ -19,7 +19,6 @@ const MAX_BEAMS = 40;
 
 export default function ThreatMap() {
   const [paused, setPaused] = useState(false);
-  const [interval, setInterval] = useState<Interval>('1h');
   const [active, setActive] = useState<Set<AttackType>>(
     () => new Set(ATTACK_TYPES)
   );
@@ -99,8 +98,6 @@ export default function ThreatMap() {
 
       <div className="pointer-events-none absolute inset-0">
         <LeftPanel
-          interval={interval}
-          onInterval={setInterval}
           active={active}
           onToggle={toggleType}
           paused={paused}

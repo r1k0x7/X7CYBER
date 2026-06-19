@@ -1,26 +1,16 @@
 'use client';
 
-import type { AttackType, Interval } from '@/lib/types';
+import type { AttackType } from '@/lib/types';
 import { ATTACK_TYPES } from '@/lib/types';
 
 interface Props {
-  interval: Interval;
-  onInterval: (i: Interval) => void;
   active: Set<AttackType>;
   onToggle: (t: AttackType) => void;
   paused: boolean;
   onPauseToggle: () => void;
 }
 
-const INTERVALS: { key: Interval; label: string }[] = [
-  { key: '1h', label: '1 Hour' },
-  { key: '6h', label: '6 Hours' },
-  { key: '24h', label: '24 Hours' },
-];
-
 export default function LeftPanel({
-  interval,
-  onInterval,
   active,
   onToggle,
   paused,
@@ -28,24 +18,6 @@ export default function LeftPanel({
 }: Props) {
   return (
     <div className="pointer-events-auto absolute left-4 top-4 z-10 w-60 rounded-md border border-threat-border bg-threat-panel p-4 backdrop-blur-md">
-      <Section title="Statistics Interval">
-        <div className="flex gap-1">
-          {INTERVALS.map((it) => (
-            <button
-              key={it.key}
-              onClick={() => onInterval(it.key)}
-              className={`flex-1 rounded px-2 py-1 text-xs transition ${
-                interval === it.key
-                  ? 'bg-threat-target/30 text-white'
-                  : 'text-threat-dim hover:text-threat-text'
-              }`}
-            >
-              {it.label}
-            </button>
-          ))}
-        </div>
-      </Section>
-
       <Section title="Attackers">
         <div className="flex flex-col gap-2">
           {ATTACK_TYPES.map((t) => (
