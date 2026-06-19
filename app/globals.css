@@ -21,13 +21,17 @@ main {
 .panel-scroll::-webkit-scrollbar {
   width: 6px;
 }
+
 .panel-scroll::-webkit-scrollbar-thumb {
   background: rgba(120, 150, 200, 0.3);
   border-radius: 3px;
 }
+
 .panel-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* ==================== ATTACK ANIMATIONS ==================== */
 
 @keyframes feedIn {
   from {
@@ -40,4 +44,231 @@ main {
     transform: translateY(0);
     background-color: transparent;
   }
+}
+
+/* Intense glow effect for attack source */
+@keyframes sourceGlow {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(255, 59, 78, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 59, 78, 0.9))
+      drop-shadow(0 0 16px rgba(255, 59, 78, 0.5));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px rgba(255, 59, 78, 0.6));
+  }
+}
+
+/* Target impact flash */
+@keyframes impactFlash {
+  0% {
+    opacity: 0;
+    filter: blur(0px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(8px);
+  }
+}
+
+/* Expanding ripple at impact point */
+@keyframes expandingRipple {
+  0% {
+    r: 0.04;
+    opacity: 1;
+  }
+  100% {
+    r: 0.2;
+    opacity: 0;
+  }
+}
+
+/* Fast traveling pulse */
+@keyframes fastPulse {
+  0% {
+    opacity: 1;
+    stroke-width: 0.01;
+  }
+  100% {
+    opacity: 0;
+    stroke-width: 0.04;
+  }
+}
+
+/* Scan line overlay */
+@keyframes scanOverlay {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0.5;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Threat indicator pulse */
+@keyframes threatIndicator {
+  0%, 100% {
+    opacity: 0.4;
+    filter: drop-shadow(0 0 4px rgba(255, 59, 78, 0.3));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 12px rgba(255, 59, 78, 0.8))
+      drop-shadow(0 0 20px rgba(58, 160, 255, 0.4));
+  }
+}
+
+/* Beam trail glow */
+@keyframes beamGlow {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Cyber grid distortion effect */
+@keyframes gridDistort {
+  0%, 100% {
+    clip-path: polygon(
+      0% 0%,
+      100% 0%,
+      100% 100%,
+      0% 100%
+    );
+    opacity: 0.3;
+  }
+  50% {
+    clip-path: polygon(
+      2% 2%,
+      98% 1%,
+      99% 98%,
+      1% 99%
+    );
+    opacity: 0.5;
+  }
+}
+
+/* Attack type specific colors - Labels */
+.attack-label {
+  animation: feedIn 0.4s ease-out;
+}
+
+.attack-label.web-attack {
+  color: #ff8a3b;
+  text-shadow: 0 0 10px rgba(255, 138, 59, 0.6);
+}
+
+.attack-label.ddos-attack {
+  color: #ff3b4e;
+  text-shadow: 0 0 10px rgba(255, 59, 78, 0.8);
+}
+
+.attack-label.intruder {
+  color: #d65bff;
+  text-shadow: 0 0 10px rgba(214, 91, 255, 0.6);
+}
+
+.attack-label.scanner {
+  color: #3aa0ff;
+  text-shadow: 0 0 10px rgba(58, 160, 255, 0.6);
+}
+
+.attack-label.anonymizer {
+  color: #39d98a;
+  text-shadow: 0 0 10px rgba(57, 217, 138, 0.6);
+}
+
+/* Utility classes for attack animations */
+.animate-attack-source {
+  animation: sourceGlow 0.8s ease-in-out infinite;
+}
+
+.animate-attack-impact {
+  animation: impactFlash 0.6s ease-out;
+}
+
+.animate-attack-ripple {
+  animation: expandingRipple 0.8s ease-out;
+}
+
+.animate-threat-indicator {
+  animation: threatIndicator 2s ease-in-out infinite;
+}
+
+/* Glitch effect for threat levels */
+@keyframes glitch {
+  0%, 100% {
+    clip-path: inset(40% 0 61% 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(92% 0 1% 0);
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    clip-path: inset(43% 0 1% 0);
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(2px, -2px);
+  }
+  80% {
+    clip-path: inset(54% 0 7% 0);
+    transform: translate(2px, 2px);
+  }
+}
+
+.glitch-text {
+  animation: glitch 0.3s infinite;
+}
+
+/* ==================== PANEL EFFECTS ==================== */
+
+.panel-glow {
+  box-shadow: inset 0 0 20px rgba(58, 160, 255, 0.1),
+    0 0 20px rgba(255, 59, 78, 0.1);
+  border-color: rgba(80, 110, 160, 0.4);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.panel-glow:hover {
+  box-shadow: inset 0 0 30px rgba(58, 160, 255, 0.15),
+    0 0 30px rgba(255, 59, 78, 0.2);
+  border-color: rgba(80, 110, 160, 0.6);
+}
+
+/* ==================== BACKGROUND EFFECTS ==================== */
+
+.cyber-grid {
+  background-image:
+    linear-gradient(
+      rgba(58, 160, 255, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(58, 160, 255, 0.03) 1px,
+      transparent 1px
+    );
+  background-size: 50px 50px;
+  animation: gridDistort 8s ease-in-out infinite;
 }
