@@ -14,6 +14,10 @@ export function makeEvent(): AttackEvent {
     target = pick(COUNTRIES);
     guard += 1;
   }
+
+  // Generate random threat level (1-5)
+  const threatLevel = Math.floor(Math.random() * 5) + 1;
+
   return {
     id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
     time: new Date().toISOString(),
@@ -26,5 +30,6 @@ export function makeEvent(): AttackEvent {
     targetLat: target.lat,
     targetLng: target.lng,
     attackType: pick(ATTACK_TYPES) as AttackType,
+    threatLevel: threatLevel as 1 | 2 | 3 | 4 | 5,
   };
 }
