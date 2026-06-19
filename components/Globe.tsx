@@ -32,9 +32,7 @@ export default function Globe({ autoRotate }: { autoRotate: boolean }) {
 
       {/* Hemisphere light untuk ambient lighting */}
       <hemisphereLight
-        skyColor={0x4a9eff}
-        groundColor={0x1a3a52}
-        intensity={1.2}
+        args={[0x4a9eff, 0x1a3a52, 1.2]}
       />
 
       {/* Fill light untuk mengurangi shadow */}
